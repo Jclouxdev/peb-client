@@ -1,10 +1,8 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import L, { map } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import 'leaflet.markercluster/dist/MarkerCluster.css';
-import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
-import { LocationMarker } from '../../components/Map/LocationMarker';
-import MyMarker from '../../components/Map/AddMarker';
+import LeadletMyPosition from '../../components/Map/Marker/LocationMarker';
+import MyMarker from '../../components/Map/Marker/AddMarker';
 import { useState } from 'react';
 
 const icon = new L.Icon({
@@ -13,12 +11,6 @@ const icon = new L.Icon({
 });
 
 const Maped = ({ data, onMarkerAdd }) => {
-
-  const [addingMarker, setAddingMarker] = useState(false);
-
-  const handleClick = () => {
-    setAddingMarker(!addingMarker);
-  }
 
   const styleMap = {
     width: 1200,
@@ -29,7 +21,6 @@ const Maped = ({ data, onMarkerAdd }) => {
 
   return (
     <div>
-      <button style={{marginTop: 0, marginLeft: 2}} onClick={handleClick}>Ajouter un marqueur</button>
       <MapContainer center={[44.85406584383385, -0.5661597118590191]} zoom={13} scrollWheelZoom={false} style={styleMap}>
         <TileLayer
           attribution='&amp;copy <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
@@ -43,8 +34,8 @@ const Maped = ({ data, onMarkerAdd }) => {
               </Popup>
             </Marker>
           ))}
-        {addingMarker && <MyMarker />}
-        <LocationMarker />
+        <MyMarker />
+        <LeadletMyPosition />
       </MapContainer>
     </div>
   );

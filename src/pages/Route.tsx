@@ -10,7 +10,7 @@ function Routing() {
         <Routes>
           <Route path="/login" element={<Login />}/>
           <Route path="/register" element={<Register />}/>
-          <Route path="/categories" element={<Acceuil />}/>
+          <Route path="/" element={<Acceuil />}/>
         </Routes>
       </Router>
   );
