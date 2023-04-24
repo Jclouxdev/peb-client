@@ -1,0 +1,18 @@
+.map {
+    width: 1200;
+    height: 700;
+    margin-left: 50px;
+}
+
+
+.btnStyle {
+    cursor:pointer;
+    background-color: #4D90FE; 
+    border-radius: 15px;
+    border: 1px solid #3079ED; 
+    color: #FFFFFF;
+    padding: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    width:28%
+}
