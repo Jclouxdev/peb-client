@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "./Form.css"
 
 export function FormPopup() {
     const [popupContent, setPopupContent] = useState({
@@ -17,10 +18,9 @@ export function FormPopup() {
     };
 
   return (
-    <div className="login-box">
-      <form>
+    <div className="popup-wrapper">
+      <form className='login-box'>
         <div>
-          <h3>Contact Form</h3>
         </div>
         <div className="user-box">
           <input
