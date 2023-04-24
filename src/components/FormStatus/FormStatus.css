@@ -1,0 +1,19 @@
+.message-box {
+  block-size: initial;
+  width: calc(100% - 2 * 1em);
+  padding: 1em;
+  border-radius: 7px;
+  margin-block: 1em;
+}
+
+.success {
+  background-color: #edffe9;
+  border: 1px solid #bdd8b0;
+  color: #9dcb9c;
+}
+
+.error {
+  background-color: #ffebe9;
+  border: 1px solid #e09e9a;
+  color: #fb6960;
+}

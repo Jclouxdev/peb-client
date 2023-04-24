@@ -1,0 +1,156 @@
+.screen {
+  width: 100vw;
+  height: 100vh;
+  background-color: #d65b62;
+}
+
+.center-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 1240px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.container__form {
+  width: 35%;
+  padding: 4em 4em;
+}
+
+.container__illustration {
+  width: 65%;
+  background-color: #fff6f6;
+  border-radius: 0 10px 10px 0;
+  padding: 0 50px;
+}
+
+.container__illustration img {
+  max-width: 500px;
+}
+
+.logo {
+  width: 90px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.decorated-text {
+  position: relative;
+}
+
+.decorated-text .hr {
+  top: 50%;
+  z-index: 0;
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: #d9d9d9;
+}
+
+.decorated-text p {
+  color: #d9d9d9;
+  width: fit-content;
+  position: relative;
+  padding: 0 0.6em;
+  z-index: 2;
+  text-transform: uppercase;
+  font-size: 0.875em;
+  background-color: white;
+  margin: auto;
+}
+
+.container__form__input p {
+  font-weight: bold;
+  margin: 0;
+  margin-block: 0.5em;
+}
+
+.container__form__input input {
+  width: calc(100% - 1.5em);
+  border: none;
+  box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.25);
+  padding: 0.8em 0 0.8em 1.5em;
+  font-size: 0.875em;
+  border-radius: 6px;
+  display: block;
+}
+
+.container__form__input input::placeholder {
+  color: #d9d9d9;
+}
+
+.link {
+  margin: 0;
+  text-align: center;
+}
+
+.link a {
+  color: #d65b62;
+}
+
+.margin-block {
+  margin: 1.5em 0 0.8em 0;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1024px) {
+  .container {
+    width: 100%;
+    height: 100vh;
+    border-radius: 0px;
+  }
+  .container__form {
+    width: 50%;
+    padding: 4em 4em;
+  }
+
+  .container__illustration {
+    width: 50%;
+    padding: 0 50px;
+  }
+
+  .container__illustration img {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 780px) {
+  .container {
+    width: 100%;
+  }
+
+  .flex-row {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container__illustration {
+    display: none;
+  }
+
+  .container__form {
+    width: 100vw;
+  }
+}
+
+@media (max-width: 500px) {
+  .container__form {
+    padding: 2em 2em;
+  }
+}

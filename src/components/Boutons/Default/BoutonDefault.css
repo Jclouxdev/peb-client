@@ -1,0 +1,10 @@
+.button {
+  width: 100%;
+  padding: 0.3em 0;
+  text-align: center;
+}
+
+.default {
+  background-color: #d65b62;
+  color: white;
+}
