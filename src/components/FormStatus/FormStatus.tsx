@@ -1,6 +1,6 @@
 import "./FormStatus.css";
 
-const FormStatus = (props: { text: string; success: boolean }) => {
+const FormStatus = (props: { text: string | null; success: boolean }) => {
   return (
     <div className={`message-box ${props.success ? "success" : "error"}`}>
       {props.text}

@@ -8,3 +8,9 @@
   background-color: #d65b62;
   color: white;
 }
+
+.button.disabled {
+  background-color: rgb(238, 238, 238);
+  color: grey;
+  cursor: not-allowed;
+}

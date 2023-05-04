@@ -105,6 +105,7 @@ h1 {
 
 .link a {
   color: #d65b62;
+  cursor: pointer;
 }
 
 .margin-block {
