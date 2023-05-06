@@ -10,7 +10,7 @@ const icon = new L.Icon({
   iconSize: [30, 30],
 });
 
-const Maped = ({ data, onMarkerAdd }) => {
+const Maped = ({ data }) => {
 
   const styleMap = {
     width: 1200,
@@ -27,7 +27,7 @@ const Maped = ({ data, onMarkerAdd }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
           {data.map((place) => (
-            <Marker key={place.id} draggable={true} position={[place.lat, place.lng]} icon={icon}>
+            <Marker key={place.id} position={[place.lat, place.lng]} icon={icon}>
               <Popup>
                 <h2>{place.name}</h2>
                 <p>{place.description}</p>

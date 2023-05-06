@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import L from "leaflet";
 import { useMap } from "react-leaflet";
-import { FormPopup } from "../FormPopup";
+import { ModalPopup } from "../FormPopup";
 import LeafletControl from "../Control/ControlCLass";
 import { ActionIcon } from "@mantine/core";
 import { MapPin } from "tabler-icons-react";
 import "./Marker.css"
+import "../Form.css"
 import axios from 'axios';
 
 
@@ -16,25 +17,16 @@ const MyMarker: React.FC<LeafletMyMarkerProps> = ({}) => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [markerData, setMarkerData] = useState<any>({});
   const map = useMap()
+  const [latPosition, setLatPosition] = useState({});
+  const [lngPosition, setLngPosition] = useState({});
 
-  const handleSubmit = async (data: any) => {
-    try {
-      setLoading(true);
-      const response = await axios.post("/markers", data);
-      console.log(response);
-      setLoading(false);
-      setShowPopup(false);
-      setMarkerData({});
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
+  const handleSubmit = async (data) => {
+    setShowPopup(false)
+    setMarkerData(data)
   }
 
   const handlePopupOpen = (event: any) => {
     setShowPopup(true);
-    const { lat, lng } = event.latlng;
-    setMarkerData({ lat, lon: lng });
   }
 
   const handleClick = () => {
@@ -43,31 +35,35 @@ const MyMarker: React.FC<LeafletMyMarkerProps> = ({}) => {
     map.on("click", function (e) {
     const marker = L.marker(e.latlng).addTo(map);
     console.log(marker);
+    const {lat, lng} = marker.getLatLng()
+    setLatPosition(lat)
+    setLatPosition(lng)
     marker
-    .bindPopup(`FetchInfo`)
+    .bindPopup(`<div><b>${markerData.title}</b><br>${markerData.description}<br><em>${markerData.categorie}</em></div>`)
     .openPopup();
     setLoading(false)
     });
     }
 
   return ( 
-    <LeafletControl position={"bottomleft"}>
-      <ActionIcon
-        onClick={handleClick}
-        loading={loading}
-        variant={"transparent"}
-      >
-      <MapPin className="styleIcon"/>
-      </ActionIcon>
+    <div>
+      <LeafletControl position={"bottomleft"}>
+        <ActionIcon
+          onClick={handleClick}
+          loading={loading}
+          variant={"transparent"}
+        >
+        <MapPin className="styleIcon"/>
+        </ActionIcon>
+      </LeafletControl>
+      <div className="popup-wrapper">
+      <LeafletControl>
       {showPopup && (
-        <FormPopup
-          isOpen={showPopup}
-          onClose={() => setShowPopup(false)}
-          onSubmit={handleSubmit}
-          data={markerData}
-        />
+        <ModalPopup onSubmit={handleSubmit} latPosition={latPosition} lngPosition={lngPosition}/>
       )}
-    </LeafletControl>
+      </LeafletControl>
+      </div>
+    </div>
   );
 };
 export default MyMarker;

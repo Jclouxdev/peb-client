@@ -1,21 +1,49 @@
 import React, { useState } from 'react';
 import "./Form.css"
 
-export function FormPopup() {
+interface PropTypes {
+  onSubmit: (data: any) => Promise<void>;
+  latPosition: {};
+  lngPosition: {};
+
+}
+
+
+export function ModalPopup({onSubmit, latPosition, lngPosition}: PropTypes) {
     const [popupContent, setPopupContent] = useState({
         title: "",
-        descritpion: "",
+        description: "",
         categorie: "",
+        lat: {},
+        lon: {},
         });
 
     const handleInputChange = (event) => {
-        setPopupContent({ ...popupContent, [event.target.name]: event.target.value });
+        setPopupContent({ ...popupContent, [event.target.name]: event.target.value, lat: latPosition, lon: lngPosition });
     }
         
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        setPopupContent({ title: "", descritpion: "", categorie: "" });
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      await submitData();
+      await onSubmit(popupContent)
+      console.log(popupContent);
+      setPopupContent({ title: "", description: "", categorie: "", lat: {}, lon: {}});
     };
+  
+    const submitData = async () => {
+      try {
+          const response = await fetch("http://localhost:8080/markers/create", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*', },
+              body: JSON.stringify(popupContent),
+          });
+          const responseData = await response.json();
+          console.log(responseData);
+      } catch (error) {
+          console.error(error);
+      }
+    }
+    
 
   return (
     <div className="popup-wrapper">
@@ -34,12 +62,12 @@ export function FormPopup() {
         </div>
         <div className="user-box">
           <input
-            type="email"
-            name="email"
-            placeholder="Email"
+            type="text"
+            name="description"
+            placeholder="Description"
             required
             onChange={handleInputChange}
-            value={popupContent.descritpion}
+            value={popupContent.description}
           />
         </div>
         <div className="user-box">

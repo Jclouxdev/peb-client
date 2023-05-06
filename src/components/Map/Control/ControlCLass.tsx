@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 const ControlClasses = {
   bottomleft: "leaflet-bottom leaflet-left",
   bottomright: "leaflet-bottom leaflet-right",
+  center: "leaflet-left leaflet-right leaflet-top leaflet-right",
   topleft: "leaflet-top leaflet-left",
   topright: "leaflet-top leaflet-right",
 };

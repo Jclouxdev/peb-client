@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Maped from '../Map/Map';
 
 const initialData = [
@@ -25,16 +25,24 @@ const initialData = [
   },
 ];
 
-function Acceuil() {
-  const [data, setData] = useState(initialData);
 
-  const handleMarkerAdd = (newMarker) => {
-    setData((prevData) => [...prevData, newMarker]);
-  };
+
+function Acceuil() {
+  const [data, setData] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await fetch('http://localhost:8080/markers/');
+  //     const data = await response.json();
+  //     console.log("data",data); 
+  //     setData(data);
+  //   };
+  //   fetchData();
+  // }, []);
 
   return (
     <div>
-      <Maped data={data} onMarkerAdd={handleMarkerAdd} />
+      <Maped data={data} />
     </div>
   );
 }
