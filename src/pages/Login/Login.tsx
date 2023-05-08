@@ -5,7 +5,7 @@ import Illustration from "../../assets/undraw_absorbed_in_re_ymd6.svg";
 import FormStatus from "../../components/FormStatus/FormStatus";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import * as yup from "yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import FullScreenLoader from "../../components/Loader/FullScreenLoader";
@@ -34,37 +34,43 @@ const Login = () => {
     mode: "onSubmit",
   });
 
-  const onSubmitHandler = async (data: any) => {
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     navigate("/app");
+  //   }
+  // });
+
+  const onSubmitHandler = (data: any) => {
     setLoading(true);
     reset();
-    try {
-      await fetch(
-        // `${import.meta.env.BASE_URL}/user/login`,
-        `http://localhost:8080/user/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setLoading(false);
-          if (data.statusCode == 401) {
-            console.log("Login failed");
-            setLoginSuccess(false);
-          } else {
-            console.log("Login success");
-            localStorage.setItem("token", data.access_token);
 
-            setLoginSuccess(true);
-            navigate("/app");
-          }
-        });
-    } catch (error) {
-      console.log("Login failed");
-      setLoginSuccess(false);
-    }
+    fetch(
+      // `${import.meta.env.BASE_URL}/user/login`,
+      `http://localhost:8080/user/login`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setLoading(false);
+        if (data.statusCode >= 400) {
+          console.log("Login failed");
+          setLoginSuccess(false);
+        } else {
+          console.log("Login success");
+          localStorage.setItem("token", data.access_token);
+
+          setLoginSuccess(true);
+          navigate("/app");
+        }
+      })
+      .catch((error) => {
+        console.log("Login failed : ", error);
+        setLoginSuccess(false);
+      });
   };
 
   return (
