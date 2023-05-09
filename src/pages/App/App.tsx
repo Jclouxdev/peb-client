@@ -66,6 +66,7 @@ const App = () => {
 
   // Fetch Markers
   useEffect(() => {
+    setLoading(true);
     const token = localStorage.getItem("token");
     fetch(`${import.meta.env.VITE_BASE_URL}/markers/`, {
       method: "GET",
@@ -74,6 +75,7 @@ const App = () => {
       .then((response) => response.json())
       .then((data: IMarker[]) => {
         setMarkers(data);
+        setLoading(false);
       });
   }, []);
 
