@@ -90,7 +90,7 @@ const App = () => {
     }, {});
   }, [markers]);
 
-  console.log(JSON.stringify(sortedMarkers));
+  // console.log(JSON.stringify(sortedMarkers));
 
   // Tri par Asc
   function orderMarkers(a: IMarker, b: IMarker) {
@@ -244,7 +244,7 @@ const App = () => {
               ))
             )}
           </>
-          <WrappedList title="Restaurants" childrens={["Pizza Mirabella"]} />
+          <WrappedList title="Restaurants" childrens={sortedMarkers} />
         </div>
       </div>
       {user && <Profile isActive={isActive} setter={setIsActive} user={user} />}
