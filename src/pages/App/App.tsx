@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import BoutonDefault from "../../components/Boutons/Default/BoutonDefault";
 import { useNavigate } from "react-router-dom";
 import FullScreenLoader from "../../components/Loader/FullScreenLoader";
+import Maped from "../../components/Map/Map/Map";
 
 import "./App.scss";
 import Logo from "../../assets/logo.png";
@@ -242,7 +243,7 @@ const App = () => {
       </div>
       {user && <Profile isActive={isActive} setter={setIsActive} user={user} />}
       <div className="screen__mapArea">
-        <img src={Map} alt="Map" />
+        <Maped data={markers}/>
       </div>
     </div>
   );
