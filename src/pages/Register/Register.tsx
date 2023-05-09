@@ -48,8 +48,7 @@ const Register = () => {
     reset();
     try {
       const result = await fetch(
-        // `${import.meta.env.BASE_URL}/user/register`,
-        `http://localhost:8080/user/register`,
+        `${import.meta.env.VITE_BASE_URL}/user/register`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -78,7 +77,7 @@ const Register = () => {
   const handleBlur = async (event: any) => {
     event.preventDefault();
     if (value[0].length >= 2) {
-      await fetch(`http://localhost:8080/user/exist/${value[0]}`, {
+      await fetch(`${import.meta.env.VITE_BASE_URL}/user/exist/${value[0]}`, {
         method: "GET",
         headers: { Authentification: "Bearer Token" },
       })

@@ -84,18 +84,14 @@ const Profile = (props: {
     setLoading(true);
     // reset();
 
-    fetch(
-      // `${import.meta.env.BASE_URL}/user/login`,
-      `http://localhost:8080/user/update`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch(`${import.meta.env.VITE_BASE_URL}/user/update`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.statusCode >= 400) {
@@ -118,7 +114,6 @@ const Profile = (props: {
       })
       .catch((e) => {
         setLoading(false);
-        console.log(e);
         setUpdateSuccess({ status: false, reason: "other" });
       });
   };

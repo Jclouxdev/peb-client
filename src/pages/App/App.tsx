@@ -7,11 +7,11 @@ import "./App.scss";
 import Logo from "../../assets/logo.png";
 import ProfilePic from "../../assets/dog1.png";
 import Map from "../../assets/Map.png";
-import WrappedList from "../../components/WrappedList/WrappedList";
 import Profile from "../../components/Profile/Profile";
 import IUser from "./IUser";
 import ICategorie from "./ICategorie";
 import IMarker from "./IMarker";
+import ScrollList from "../../components/ScrollList/ScrollList";
 
 const App = () => {
   const navigate = useNavigate();
@@ -20,6 +20,9 @@ const App = () => {
   const [categories, setCategories] = useState<ICategorie[] | undefined>();
   const [isActive, setIsActive] = useState<boolean>(false);
   const [markers, setMarkers] = useState<IMarker[]>();
+  const [selectedMarkerId, setSelectedMarkerId] = useState<
+    string | undefined
+  >();
 
   // Fetch current user and redirect if no token
   useEffect(() => {
@@ -29,7 +32,7 @@ const App = () => {
     } else {
       navigate("/login");
     }
-    fetch(`http://localhost:8080/user/profile`, {
+    fetch(`${import.meta.env.VITE_BASE_URL}/user/profile`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -47,7 +50,7 @@ const App = () => {
 
   // Fetch categories
   useEffect(() => {
-    fetch(`http://localhost:8080/categories`, {
+    fetch(`${import.meta.env.VITE_BASE_URL}/categories`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -64,7 +67,7 @@ const App = () => {
   // Fetch Markers
   useEffect(() => {
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:8080/markers/`, {
+    fetch(`${import.meta.env.VITE_BASE_URL}/markers/`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -221,30 +224,18 @@ const App = () => {
             className="screen__nav__markerSearchBar__input"
             type="text"
             name="markerSearchBar"
-            placeholder="Pizzeria Mirabella"
+            placeholder="Pizzeria Mirabela"
           />
         </div>
         <div className="screen__nav__categories">
-          <>
-            {categories == undefined ? (
-              <p>Pas de catégories</p>
-            ) : (
-              Object.entries(sortedMarkers).map(([categoryId, markers]) => (
-                <div>
-                  <p>
-                    {
-                      categories.find(({ id }) => id === Number(categoryId))
-                        ?.name
-                    }
-                    {markers.map((marker) => (
-                      <div>{marker.name}</div>
-                    ))}
-                  </p>
-                </div>
-              ))
-            )}
-          </>
-          <WrappedList title="Restaurants" childrens={sortedMarkers} />
+          <ScrollList
+            childrens={sortedMarkers}
+            categories={categories}
+            selectedMarkerId={selectedMarkerId}
+            onSelectMarker={(markerId) => {
+              setSelectedMarkerId(markerId);
+            }}
+          />
         </div>
       </div>
       {user && <Profile isActive={isActive} setter={setIsActive} user={user} />}

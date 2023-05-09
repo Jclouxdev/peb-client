@@ -34,25 +34,15 @@ const Login = () => {
     mode: "onSubmit",
   });
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("token")) {
-  //     navigate("/app");
-  //   }
-  // });
-
   const onSubmitHandler = (data: any) => {
     setLoading(true);
     reset();
 
-    fetch(
-      // `${import.meta.env.BASE_URL}/user/login`,
-      `http://localhost:8080/user/login`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }
-    )
+    fetch(`${import.meta.env.VITE_BASE_URL}/user/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
