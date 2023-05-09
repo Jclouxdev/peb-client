@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./Form.css"
+import ICategorie from '../../pages/App/ICategorie';
+import * as yup from "yup";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 interface PropTypes {
   onSubmit: (data: any) => Promise<void>;
@@ -8,34 +12,50 @@ interface PropTypes {
 
 }
 
+const schema = yup.object().shape({
+  name: yup.string().min(2).max(20).required(),
+  description: yup.string().max(40).required(),
+  categorieId: yup.number().required(),
+  lat: yup.number().required(),
+  lon: yup.number().required()
+});
 
 export function ModalPopup({onSubmit, latPosition, lngPosition}: PropTypes) {
-    const [popupContent, setPopupContent] = useState({
-        title: "",
-        description: "",
-        categorie: "",
-        lat: {},
-        lon: {},
-        });
+    const [categories, setCategories] = useState<ICategorie[] | undefined>();
 
-    const handleInputChange = (event) => {
-        setPopupContent({ ...popupContent, [event.target.name]: event.target.value, lat: latPosition, lon: lngPosition });
-    }
-        
-    const handleSubmit = async (event) => {
-      event.preventDefault();
-      await submitData();
-      await onSubmit(popupContent)
-      console.log(popupContent);
-      setPopupContent({ title: "", description: "", categorie: "", lat: {}, lon: {}});
-    };
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm({
+      resolver: yupResolver(schema),
+      mode: "onSubmit",
+      defaultValues: {
+        lat: latPosition,
+        lon: lngPosition,
+        name: "",
+        description: "",
+        categorieId: 1,
+      },
+    });
+
+    useEffect(() => {
+      fetch(`http://localhost:8080/categories`, {
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((data: ICategorie[]) => {
+          setCategories(data);
+        });
+    }, []);
   
-    const submitData = async () => {
+    const onSubmitHandler = async (data) => {
       try {
+          const token = localStorage.getItem("token");
           const response = await fetch("http://localhost:8080/markers/create", {
               method: "POST",
-              headers: { "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*', },
-              body: JSON.stringify(popupContent),
+              headers: { "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*', Authorization: `Bearer ${token}` },
+              body: JSON.stringify(data),
           });
           const responseData = await response.json();
           console.log(responseData);
@@ -47,43 +67,43 @@ export function ModalPopup({onSubmit, latPosition, lngPosition}: PropTypes) {
 
   return (
     <div className="popup-wrapper">
-      <form className='login-box'>
+      <form className='login-box' onSubmit={handleSubmit(onSubmitHandler)}>
         <div>
         </div>
         <div className="user-box">
           <input
             type="text"
-            name="title"
+            {...register("name")}
             placeholder="Title"
             required
-            onChange={handleInputChange}
-            value={popupContent.title}
           />
         </div>
         <div className="user-box">
           <input
             type="text"
-            name="description"
+            {...register("description")}
             placeholder="Description"
             required
-            onChange={handleInputChange}
-            value={popupContent.description}
           />
         </div>
         <div className="user-box">
-        <input
-            type="text"
-            name="categorie"
-            placeholder="Categorie"
-            required
-            onChange={handleInputChange}
-            value={popupContent.categorie}
-          />
+          <select
+            {...register("categorieId")}>
+              <>
+                {
+                  categories?.map(element => {
+                    return <option value={element.id}>{element.name}</option>
+                  })
+                }
+              </>
+          </select>
+          {errors.categorieId && 
+            <p>{errors.categorieId.message}</p>
+          }
         </div>
         <div>
           <button
           type="submit"
-          onClick={handleSubmit}
           >Submit</button>
         </div>
       </form>

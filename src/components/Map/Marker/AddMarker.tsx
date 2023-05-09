@@ -7,11 +7,14 @@ import { ActionIcon } from "@mantine/core";
 import { MapPin } from "tabler-icons-react";
 import "./Marker.css"
 import "../Form.css"
+import ICategorie from "../../../pages/App/ICategorie";
 
 
-interface LeafletMyMarkerProps {}
+interface LeafletMyMarkerProps {
 
-const MyMarker: React.FC<LeafletMyMarkerProps> = ({}) => {
+}
+
+const MyMarker: React.FC<LeafletMyMarkerProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [showPopup, setShowPopup] = useState<boolean>(false);
   const [markerData, setMarkerData] = useState<any>({});
@@ -38,7 +41,7 @@ const MyMarker: React.FC<LeafletMyMarkerProps> = ({}) => {
     setLatPosition(lat)
     setLngPosition(lng)
     marker
-    .bindPopup(`<div><b>${markerData.title}</b><br>${markerData.description}<br><em>${markerData.categorie}</em></div>`)
+    .bindPopup(`<div><b>${markerData.name}</b><br>${markerData.description}<br><em>${markerData.categorie}</em></div>`)
     .openPopup();
     setLoading(false)
     });

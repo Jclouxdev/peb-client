@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import LeadletMyPosition from '../Marker/LocationMarker';
 import MyMarker from '../Marker/AddMarker';
 import IMarker from "../../../pages/App/IMarker";
+import "./map.css"
 
 const icon = new L.Icon({
   iconUrl: 'https://cdn4.iconfinder.com/data/icons/map-pins-2/256/19-512.png',
@@ -12,15 +13,9 @@ const icon = new L.Icon({
 
 const Maped = ({ data }: { data?: IMarker[] }) => {
 
-  const styleMap = {
-    width: 1200,
-    height: 700,
-    margin: 100,
-  };
-
   return (
     <div>
-      <MapContainer center={[44.85406584383385, -0.5661597118590191]} zoom={13} scrollWheelZoom={false} style={styleMap}>
+      <MapContainer center={[44.85406584383385, -0.5661597118590191]} zoom={13} scrollWheelZoom={false} className="map">
         <TileLayer
           attribution='&amp;copy <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

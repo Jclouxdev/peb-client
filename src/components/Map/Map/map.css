@@ -1,7 +1,6 @@
 .map {
-    width: 1200;
-    height: 700;
-    margin-left: 50px;
+    min-width: 100%;
+    min-height: 100vh;
 }
 
 
