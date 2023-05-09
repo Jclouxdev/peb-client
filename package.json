@@ -11,16 +11,23 @@
   "dependencies": {
     "@hookform/resolvers": "^3.1.0",
     "@loadable/component": "^5.15.3",
+    "@mantine/core": "^6.0.8",
+    "font-awesome": "^4.7.0",
+    "http-proxy-middleware": "^2.0.6",
     "jwt-decode": "^3.1.2",
+    "leaflet": "^1.9.3",
+    "leaflet-easybutton": "^2.4.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.10.0",
     "sort-by": "^1.2.0",
-    "yup": "^1.1.1"
+    "tabler-icons-react": "^1.56.0"
   },
   "devDependencies": {
+    "@types/leaflet": "^1.9.3",
     "@types/loadable__component": "^5.13.4",
     "@types/node": "^18.16.3",
     "@types/react": "^18.0.28",
@@ -37,6 +44,7 @@
     "react-hook-form": "^7.43.9",
     "sass": "^1.62.1",
     "typescript": "^4.9.5",
-    "vite": "^4.2.0"
+    "vite": "^4.2.0",
+    "yup": "^1.1.1"
   }
 }
