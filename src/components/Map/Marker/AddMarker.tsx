@@ -26,8 +26,9 @@ const MyMarker: React.FC<LeafletMyMarkerProps> = () => {
       const { lat, lng } = marker.getLatLng();
       setLatPosition(lat);
       setLngPosition(lng);
+      setLoading(false);
+      map.off("click");
     });
-    setLoading(false);
   };
 
   return (
@@ -37,6 +38,7 @@ const MyMarker: React.FC<LeafletMyMarkerProps> = () => {
           onClick={handleClick}
           loading={loading}
           variant={"transparent"}
+          disabled={showPopup ? true : false}
         >
           <MapPin className="styleIcon" />
         </ActionIcon>
