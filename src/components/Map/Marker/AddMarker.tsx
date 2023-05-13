@@ -7,8 +7,6 @@ import { ActionIcon } from "@mantine/core";
 import { MapPin } from "tabler-icons-react";
 import "./Marker.css"
 import "../Form.css"
-import ICategorie from "../../../pages/App/ICategorie";
-import IMarker from "../../../pages/App/IMarker";
 
 
 interface LeafletMyMarkerProps {
@@ -26,17 +24,16 @@ const MyMarker: React.FC<LeafletMyMarkerProps> = () => {
 
   const handleClick = () => {
     setLoading(true);
-    if (!showPopup) {
-      map.on("click", function (e) {
-        setShowPopup(true)
-        const marker = L.marker(e.latlng).addTo(map);
-        console.log(marker);
-        const {lat, lng} = marker.getLatLng()
-        setLatPosition(lat)
-        setLngPosition(lng)
-        setLoading(false)
-      });
-    }
+    map.on("click", function (e) {
+      setShowPopup(true)
+      const marker = L.marker(e.latlng).addTo(map);
+      console.log(marker);
+      const {lat, lng} = marker.getLatLng()
+      setLatPosition(lat)
+      setLngPosition(lng)
+      setLoading(false)
+      map.off("click")
+    });
   }
 
   return ( 
