@@ -13,6 +13,7 @@ import IUser from "./IUser";
 import ICategorie from "./ICategorie";
 import IMarker from "./IMarker";
 import ScrollList from "../../components/ScrollList/ScrollList";
+import Fuse from "fuse.js";
 
 const App = () => {
   const navigate = useNavigate();
@@ -24,6 +25,8 @@ const App = () => {
   const [selectedMarkerId, setSelectedMarkerId] = useState<
     string | undefined
   >();
+  const [searchMarkerBar, setSearchMarkerBar] = useState<string>("");
+  const [fuseMarkers, setFuseMarkers] = useState();
 
   // Fetch current user and redirect if no token
   useEffect(() => {
@@ -85,16 +88,42 @@ const App = () => {
       return [];
     }
 
-    return markers.reduce<{ [key: number]: IMarker[] }>((acc, marker) => {
-      if (!Object.keys(acc).includes(marker.categorie.id.toString())) {
-        acc[marker.categorie.id] = [];
-      }
+    if (searchMarkerBar.length > 0) {
+      // Fuzy search et reconstruction de l'objet
+      // TYPE : [key: number]: IMarker[]
+      const fuse: Fuse<IMarker> = new Fuse(markers, {
+        keys: ["name", "markers.name"],
+      });
+      const fusedMarkers: Fuse.FuseResult<IMarker>[] =
+        fuse.search(searchMarkerBar);
+      return fusedMarkers.reduce<{ [key: number]: IMarker[] }>(
+        (acc, fuseResult) => {
+          if (
+            !Object.keys(acc).includes(fuseResult.item.categorie.id.toString())
+          ) {
+            acc[fuseResult.item.categorie.id] = [];
+          }
 
-      acc[marker.categorie.id].push(marker);
-      acc[marker.categorie.id].sort(orderMarkers);
-      return acc;
-    }, {});
-  }, [markers]);
+          acc[fuseResult.item.categorie.id].push(fuseResult.item);
+          acc[fuseResult.item.categorie.id].sort(orderMarkers);
+          return acc;
+        },
+        {}
+      );
+    } else {
+      // Return ordered markers
+      // TYPE : [key: number]: IMarker[]
+      return markers.reduce<{ [key: number]: IMarker[] }>((acc, marker) => {
+        if (!Object.keys(acc).includes(marker.categorie.id.toString())) {
+          acc[marker.categorie.id] = [];
+        }
+
+        acc[marker.categorie.id].push(marker);
+        acc[marker.categorie.id].sort(orderMarkers);
+        return acc;
+      }, {});
+    }
+  }, [markers, searchMarkerBar]);
 
   // console.log(JSON.stringify(sortedMarkers));
 
@@ -226,7 +255,10 @@ const App = () => {
           <input
             className="screen__nav__markerSearchBar__input"
             type="text"
-            name="markerSearchBar"
+            name="fuseMarkers"
+            onChange={(e) => {
+              setSearchMarkerBar(e.currentTarget.value);
+            }}
             placeholder="Pizzeria Mirabela"
           />
         </div>
@@ -243,7 +275,7 @@ const App = () => {
       </div>
       {user && <Profile isActive={isActive} setter={setIsActive} user={user} />}
       <div className="screen__mapArea">
-        <Maped data={markers}/>
+        <Maped data={markers} />
       </div>
     </div>
   );
