@@ -13,6 +13,7 @@ const LeadletMyPosition: React.FC<LeafletMyPositionProps> = ({}) => {
     locationfound(e) {
       map.flyTo(e.latlng, map.getZoom())
       const marker = L.marker(e.latlng).addTo(map)
+      marker.bindPopup(`<h1> Your Position </h1>`).openPopup()
       setLoading(false)
     },
   })

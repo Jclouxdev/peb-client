@@ -8,6 +8,7 @@ import { MapPin } from "tabler-icons-react";
 import "./Marker.css"
 import "../Form.css"
 import ICategorie from "../../../pages/App/ICategorie";
+import IMarker from "../../../pages/App/IMarker";
 
 
 interface LeafletMyMarkerProps {
@@ -22,7 +23,7 @@ const MyMarker: React.FC<LeafletMyMarkerProps> = () => {
   const [latPosition, setLatPosition] = useState({});
   const [lngPosition, setLngPosition] = useState({});
 
-  const handleSubmit = async (data) => {
+  const handleSubmit = async (data: IMarker[]) => {
     setShowPopup(false)
     setMarkerData(data)
   }
@@ -60,7 +61,7 @@ const MyMarker: React.FC<LeafletMyMarkerProps> = () => {
       </LeafletControl>
       <div className="popup-wrapper">
       <LeafletControl>
-      {showPopup && (
+      {showPopup == true && (
         <ModalPopup onSubmit={handleSubmit} latPosition={latPosition} lngPosition={lngPosition}/>
       )}
       </LeafletControl>

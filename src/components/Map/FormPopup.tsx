@@ -14,8 +14,8 @@ interface PropTypes {
 
 const schema = yup.object().shape({
   name: yup.string().min(2).max(20).required(),
-  description: yup.string().max(40).required(),
-  categorieId: yup.number().required(),
+  description: yup.string().min(2).max(40).required(),
+  categorieId: yup.number().integer().required(),
   lat: yup.number().required(),
   lon: yup.number().required()
 });
@@ -49,7 +49,7 @@ export function ModalPopup({onSubmit, latPosition, lngPosition}: PropTypes) {
         });
     }, []);
   
-    const onSubmitHandler = async (data) => {
+    const onSubmitHandler = async (data: any) => {
       try {
           const token = localStorage.getItem("token");
           const response = await fetch("http://localhost:8080/markers/create", {
@@ -59,6 +59,9 @@ export function ModalPopup({onSubmit, latPosition, lngPosition}: PropTypes) {
           });
           const responseData = await response.json();
           console.log(responseData);
+          console.log(data);
+          
+          onSubmit(responseData)
       } catch (error) {
           console.error(error);
       }
@@ -88,18 +91,17 @@ export function ModalPopup({onSubmit, latPosition, lngPosition}: PropTypes) {
         </div>
         <div className="user-box">
           <select
-            {...register("categorieId")}>
+            {...register("categorieId", {valueAsNumber: true})}>
               <>
                 {
                   categories?.map(element => {
-                    return <option value={element.id}>{element.name}</option>
+                    return <option value={element.id}>
+                      {element.name}
+                      </option>
                   })
                 }
               </>
           </select>
-          {errors.categorieId && 
-            <p>{errors.categorieId.message}</p>
-          }
         </div>
         <div>
           <button
