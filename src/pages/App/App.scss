@@ -111,6 +111,7 @@
       .screen__nav__mapSearchBar__input {
         border: none;
         padding-left: 13px;
+        min-height: 35px;
         box-sizing: border-box;
         width: calc(100% - (45px * 2));
       }
@@ -134,7 +135,7 @@
 
     .screen__nav__markerSearchBar {
       width: 100%;
-      height: 35px;
+      min-height: 35px;
       display: flex;
       flex-direction: row;
       background: white;

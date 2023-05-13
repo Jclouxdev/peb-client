@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import "./Form.css"
-import ICategorie from '../../pages/App/ICategorie';
+import React, { useEffect, useState } from "react";
+import "./Form.css";
+import ICategorie from "../../pages/App/ICategorie";
 import * as yup from "yup";
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 interface PropTypes {
   onSubmit: (data: any) => Promise<void>;
   latPosition: {};
   lngPosition: {};
-
 }
 
 const schema = yup.object().shape({
@@ -17,62 +16,61 @@ const schema = yup.object().shape({
   description: yup.string().min(2).max(40).required(),
   categorieId: yup.number().integer().required(),
   lat: yup.number().required(),
-  lon: yup.number().required()
+  lon: yup.number().required(),
 });
 
-export function ModalPopup({onSubmit, latPosition, lngPosition}: PropTypes) {
-    const [categories, setCategories] = useState<ICategorie[] | undefined>();
+export function ModalPopup({ onSubmit, latPosition, lngPosition }: PropTypes) {
+  const [categories, setCategories] = useState<ICategorie[] | undefined>();
 
-    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm({
-      resolver: yupResolver(schema),
-      mode: "onSubmit",
-      defaultValues: {
-        lat: latPosition,
-        lon: lngPosition,
-        name: "",
-        description: "",
-        categorieId: 1,
-      },
-    });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: "onSubmit",
+    defaultValues: {
+      lat: latPosition,
+      lon: lngPosition,
+      name: "",
+      description: "",
+      categorieId: 1,
+    },
+  });
 
-    useEffect(() => {
-      fetch(`http://localhost:8080/categories`, {
-        method: "GET",
-      })
-        .then((response) => response.json())
-        .then((data: ICategorie[]) => {
-          setCategories(data);
-        });
-    }, []);
-  
-    const onSubmitHandler = async (data: any) => {
-      try {
-          const token = localStorage.getItem("token");
-          const response = await fetch("http://localhost:8080/markers/create", {
-              method: "POST",
-              headers: { "Content-Type": "application/json", 'Access-Control-Allow-Origin': '*', Authorization: `Bearer ${token}` },
-              body: JSON.stringify(data),
-          });
-          const responseData = await response.json();
-          console.log(responseData);
-          console.log(data);
-          
-          onSubmit(responseData)
-      } catch (error) {
-          console.error(error);
-      }
+  useEffect(() => {
+    fetch(`http://localhost:8080/categories`, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data: ICategorie[]) => {
+        setCategories(data);
+      });
+  }, []);
+
+  const onSubmitHandler = async (data: any) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch("http://localhost:8080/markers/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (error) {
+      console.error(error);
     }
-    
+  };
 
   return (
     <div className="popup-wrapper">
-      <form className='login-box' onSubmit={handleSubmit(onSubmitHandler)}>
-        <div>
-        </div>
+      <form className="login-box" onSubmit={handleSubmit(onSubmitHandler)}>
+        <div></div>
         <div className="user-box">
           <input
             type="text"
@@ -104,9 +102,7 @@ export function ModalPopup({onSubmit, latPosition, lngPosition}: PropTypes) {
           </select>
         </div>
         <div>
-          <button
-          type="submit"
-          >Submit</button>
+          <button type="submit">Submit</button>
         </div>
       </form>
     </div>
