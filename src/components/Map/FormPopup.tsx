@@ -129,7 +129,7 @@ export function ModalPopup({
           </select>
         </div>
         <div>
-          <button type="submit">Submit</button>
+          <button type="submit">Placer</button>
         </div>
       </form>
     </div>

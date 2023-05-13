@@ -32,7 +32,7 @@ const MyMarker: React.FC<LeafletMyMarkerProps> = () => {
   };
 
   return (
-    <div>
+    <>
       <LeafletControl position={"bottomleft"}>
         <ActionIcon
           onClick={handleClick}
@@ -55,7 +55,7 @@ const MyMarker: React.FC<LeafletMyMarkerProps> = () => {
           )}
         </LeafletControl>
       </div>
-    </div>
+    </>
   );
 };
 export default MyMarker;

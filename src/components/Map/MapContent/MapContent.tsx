@@ -33,7 +33,7 @@ const MapContent = ({
       parseFloat(getMarker.lat),
       parseFloat(getMarker.lon)
     );
-    mapContext.map.flyTo(latlgn);
+    mapContext.map.flyTo(latlgn, 16); 
   }, [selectedMarker]);
 
   return (
