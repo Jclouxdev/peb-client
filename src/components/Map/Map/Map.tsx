@@ -1,40 +1,32 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import LeadletMyPosition from '../Marker/LocationMarker';
-import MyMarker from '../Marker/AddMarker';
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { useLeafletContext } from "@react-leaflet/core";
+import "leaflet/dist/leaflet.css";
+import LeadletMyPosition from "../Marker/LocationMarker";
+import MyMarker from "../Marker/AddMarker";
 import IMarker from "../../../pages/App/IMarker";
-import "./map.css"
+import "./map.css";
+import MapContent from "../MapContent/MapContent";
 
-const icon = new L.Icon({
-  iconUrl: 'https://cdn4.iconfinder.com/data/icons/map-pins-2/256/19-512.png',
-  iconSize: [30, 30],
-});
-
-const Maped = ({ data }: { data?: IMarker[] }) => {
-
+const Maped = ({
+  data,
+  selectedMarkerId,
+}: {
+  data: IMarker[] | undefined;
+  selectedMarkerId: string | undefined;
+}) => {
+  // const maxContext = useLeafletContext();
   return (
     <div>
-      <MapContainer center={[44.85406584383385, -0.5661597118590191]} zoom={13} scrollWheelZoom={false} className="map">
-        <TileLayer
-          attribution='&amp;copy <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        {data && data.length > 0 ? data.map((place) => (
-          <Marker key={place.id} position={[parseInt(place.lat), parseInt(place.lon)]} icon={icon}>
-            <Popup>
-              <h2>{place.name}</h2>
-              <p>{place.description}</p>
-            </Popup>
-          </Marker>
-        )) : (<p>No data available.</p>)}
-        <MyMarker />
-        <LeadletMyPosition />
+      <MapContainer
+        center={[44.85406584383385, -0.5661597118590191]}
+        zoom={12}
+        scrollWheelZoom={true}
+        className="map"
+      >
+        <MapContent markers={data} selectedMarker={selectedMarkerId} />
       </MapContainer>
     </div>
   );
 };
 
-
 export default Maped;
-
