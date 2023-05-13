@@ -49,22 +49,24 @@ export function ModalPopup({ latPosition, lngPosition }: PropTypes) {
   }, []);
 
   const onSubmitHandler = async (data: any) => {
-    try {
-      const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:8080/markers/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
+    console.log("Data before", data);
+
+    const token = localStorage.getItem("token");
+    fetch(`${import.meta.env.VITE_BASE_URL}/markers/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success : ", data);
+      })
+      .catch((error) => {
+        console.log("Error :", error);
       });
-      const responseData = await response.json();
-      console.log(responseData);
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   return (
@@ -88,17 +90,12 @@ export function ModalPopup({ latPosition, lngPosition }: PropTypes) {
           />
         </div>
         <div className="user-box">
-          <select
-            {...register("categorieId", {valueAsNumber: true})}>
-              <>
-                {
-                  categories?.map(element => {
-                    return <option value={element.id}>
-                      {element.name}
-                      </option>
-                  })
-                }
-              </>
+          <select {...register("categorieId", { valueAsNumber: true })}>
+            <>
+              {categories?.map((element) => {
+                return <option value={element.id}>{element.name}</option>;
+              })}
+            </>
           </select>
         </div>
         <div>
