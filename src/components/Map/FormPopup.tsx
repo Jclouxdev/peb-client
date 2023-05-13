@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 interface PropTypes {
-  onSubmit: (data: any) => Promise<void>;
+  setShowPopup: React.Dispatch<React.SetStateAction<boolean>>;
   latPosition: {};
   lngPosition: {};
 }
@@ -19,7 +19,7 @@ const schema = yup.object().shape({
   lon: yup.number().required(),
 });
 
-export function ModalPopup({ latPosition, lngPosition }: PropTypes) {
+export function ModalPopup({setShowPopup, latPosition, lngPosition }: PropTypes) {
   const [categories, setCategories] = useState<ICategorie[] | undefined>();
 
   const {
@@ -63,6 +63,8 @@ export function ModalPopup({ latPosition, lngPosition }: PropTypes) {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success : ", data);
+        setShowPopup(false);
+        window.location.reload();
       })
       .catch((error) => {
         console.log("Error :", error);
@@ -72,7 +74,7 @@ export function ModalPopup({ latPosition, lngPosition }: PropTypes) {
   return (
     <div className="popup-wrapper">
       <form className="login-box" onSubmit={handleSubmit(onSubmitHandler)}>
-        <div></div>
+        <div onClick={() => {setShowPopup(false)}}> X </div>
         <div className="user-box">
           <input
             type="text"

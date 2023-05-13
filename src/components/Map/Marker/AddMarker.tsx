@@ -18,35 +18,26 @@ interface LeafletMyMarkerProps {
 const MyMarker: React.FC<LeafletMyMarkerProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [showPopup, setShowPopup] = useState<boolean>(false);
-  const [markerData, setMarkerData] = useState<any>({});
   const map = useMap()
   const [latPosition, setLatPosition] = useState({});
   const [lngPosition, setLngPosition] = useState({});
 
-  const handleSubmit = async (data: IMarker[]) => {
-    setShowPopup(false)
-    setMarkerData(data)
-  }
 
-  const handlePopupOpen = (event: any) => {
-    setShowPopup(true);
-  }
 
   const handleClick = () => {
     setLoading(true);
-    map.on("click", handlePopupOpen);
-    map.on("click", function (e) {
-    const marker = L.marker(e.latlng).addTo(map);
-    console.log(marker);
-    const {lat, lng} = marker.getLatLng()
-    setLatPosition(lat)
-    setLngPosition(lng)
-    marker
-    .bindPopup(`<div><b>${markerData.name}</b><br>${markerData.description}<br><em>${markerData.categorie}</em></div>`)
-    .openPopup();
-    setLoading(false)
-    });
+    if (!showPopup) {
+      map.on("click", function (e) {
+        setShowPopup(true)
+        const marker = L.marker(e.latlng).addTo(map);
+        console.log(marker);
+        const {lat, lng} = marker.getLatLng()
+        setLatPosition(lat)
+        setLngPosition(lng)
+        setLoading(false)
+      });
     }
+  }
 
   return ( 
     <div>
@@ -61,8 +52,8 @@ const MyMarker: React.FC<LeafletMyMarkerProps> = () => {
       </LeafletControl>
       <div className="popup-wrapper">
       <LeafletControl>
-      {showPopup == true && (
-        <ModalPopup onSubmit={handleSubmit} latPosition={latPosition} lngPosition={lngPosition}/>
+      {showPopup && (
+        <ModalPopup setShowPopup={setShowPopup} latPosition={latPosition} lngPosition={lngPosition}/>
       )}
       </LeafletControl>
       </div>
