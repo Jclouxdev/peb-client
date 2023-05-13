@@ -13,13 +13,13 @@ interface PropTypes {
 
 const schema = yup.object().shape({
   name: yup.string().min(2).max(20).required(),
-  description: yup.string().min(2).max(40).required(),
+  description: yup.string().min(8).max(40).required(),
   categorieId: yup.number().integer().required(),
   lat: yup.number().required(),
   lon: yup.number().required(),
 });
 
-export function ModalPopup({ onSubmit, latPosition, lngPosition }: PropTypes) {
+export function ModalPopup({ latPosition, lngPosition }: PropTypes) {
   const [categories, setCategories] = useState<ICategorie[] | undefined>();
 
   const {
