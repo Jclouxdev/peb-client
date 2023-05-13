@@ -1,6 +1,15 @@
 .styleIcon {
-    color: black;
-    height: 40px;
-    width: 40px;
-    position: absolute;
+  color: black;
+  height: 40px;
+  width: 100px;
+  position: absolute;
+}
+
+.placeMarker__button {
+  margin-bottom: 20px;
+  margin-left: 20px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 7px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }

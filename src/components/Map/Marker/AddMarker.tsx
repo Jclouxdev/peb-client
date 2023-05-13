@@ -39,6 +39,7 @@ const MyMarker: React.FC<LeafletMyMarkerProps> = () => {
           loading={loading}
           variant={"transparent"}
           disabled={showPopup ? true : false}
+          className="placeMarker__button"
         >
           <MapPin className="styleIcon" />
         </ActionIcon>
