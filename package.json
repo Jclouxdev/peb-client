@@ -12,6 +12,7 @@
     "@hookform/resolvers": "^3.1.0",
     "@loadable/component": "^5.15.3",
     "@mantine/core": "^6.0.8",
+    "esri-leaflet-geocoder": "^3.1.4",
     "font-awesome": "^4.7.0",
     "fuse.js": "^6.6.2",
     "http-proxy-middleware": "^2.0.6",
@@ -28,6 +29,7 @@
     "tabler-icons-react": "^1.56.0"
   },
   "devDependencies": {
+    "@types/esri-leaflet-geocoder": "^2.2.3",
     "@types/leaflet": "^1.9.3",
     "@types/loadable__component": "^5.13.4",
     "@types/node": "^18.16.3",
