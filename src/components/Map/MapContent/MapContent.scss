@@ -1,0 +1,126 @@
+.marker__popup {
+  hr {
+    margin: 15px 0;
+    opacity: 0.2;
+  }
+}
+
+.shared__success {
+  color: rgb(7, 89, 7);
+}
+
+.shared__failed {
+  color: red;
+}
+
+.marker__popup__infos {
+  margin-bottom: 20px;
+
+  p {
+    font-size: 1.1em;
+  }
+}
+
+.marker__popup__nav__input {
+  width: 130px;
+  display: none;
+  transition: 0.3s;
+}
+
+.marker__popup__nav__input.display {
+  display: flex;
+  flex-direction: row;
+  transition: 0.3s;
+}
+
+.marker__popup__nav__input.display input {
+  width: calc(100% - 35px);
+  outline: none;
+  border: none;
+  border-bottom: 1px solid lightgray;
+}
+
+.marker__popup__nav__input.display::placeholder {
+  color: rgb(158, 158, 158);
+}
+
+.marker__popup__nav__input__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 5px;
+  width: 28px;
+  height: 28px;
+  border: rgb(74, 152, 74) 1px dashed;
+  border-radius: 50%;
+}
+
+.marker__popup__nav__input__button:hover {
+  border: rgb(74, 152, 74) 1px solid;
+}
+
+.marker__popup__nav__input__button svg {
+  color: rgb(74, 152, 74);
+}
+
+.marker__popup__nav {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  gap: 7px;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+
+  .marker__popup__nav__share,
+  .marker__popup__nav__edit,
+  .marker__popup__nav__close {
+    width: 28px;
+    height: 28px;
+    box-sizing: border-box;
+    display: flex;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .marker__popup__nav__share {
+    border: 1px #6a1b9a dashed;
+    color: #6a1b9a;
+    transition: 0.3s;
+  }
+  .marker__popup__nav__share:hover {
+    border: 1px #6a1b9a solid;
+    transform: rotate(20deg);
+    transition: 0.3s;
+  }
+  .marker__popup__nav__edit {
+    border: 1px dashed #0d47a1;
+    color: #0d47a1;
+    transition: 0.3s;
+  }
+  .marker__popup__nav__edit:hover {
+    border: 1px solid #0d47a1;
+    transform: rotate(20deg);
+    transition: 0.3s;
+  }
+  .marker__popup__nav__close {
+    border: 1px dashed #b71c1c;
+    color: #b71c1c;
+    transition: 0.3s;
+  }
+  .marker__popup__nav__close:hover {
+    border: 1px solid #b71c1c;
+    transform: rotate(20deg);
+    transition: 0.3s;
+  }
+}

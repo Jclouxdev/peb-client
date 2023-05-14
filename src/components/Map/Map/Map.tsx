@@ -10,9 +10,11 @@ import MapContent from "../MapContent/MapContent";
 const Maped = ({
   data,
   selectedMarkerId,
+  setSelectedMarkerId,
 }: {
   data: IMarker[] | undefined;
   selectedMarkerId: string | undefined;
+  setSelectedMarkerId: React.Dispatch<React.SetStateAction<string | undefined>>;
 }) => {
   // const maxContext = useLeafletContext();
   return (
@@ -23,7 +25,11 @@ const Maped = ({
         scrollWheelZoom={true}
         className="map"
       >
-        <MapContent markers={data} selectedMarker={selectedMarkerId} />
+        <MapContent
+          markers={data}
+          selectedMarker={selectedMarkerId}
+          setSelectedMarkerId={setSelectedMarkerId}
+        />
       </MapContainer>
     </div>
   );

@@ -275,7 +275,11 @@ const App = () => {
       </div>
       {user && <Profile isActive={isActive} setter={setIsActive} user={user} />}
       <div className="screen__mapArea">
-        <Maped data={markers} selectedMarkerId={selectedMarkerId} />
+        <Maped
+          data={markers}
+          selectedMarkerId={selectedMarkerId}
+          setSelectedMarkerId={setSelectedMarkerId}
+        />
       </div>
     </div>
   );

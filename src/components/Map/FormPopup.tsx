@@ -53,8 +53,6 @@ export function ModalPopup({
   }, []);
 
   const onSubmitHandler = async (data: any) => {
-    console.log("Data before", data);
-
     const token = localStorage.getItem("token");
     fetch(`${import.meta.env.VITE_BASE_URL}/markers/create`, {
       method: "POST",
@@ -66,7 +64,6 @@ export function ModalPopup({
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success : ", data);
         setShowPopup(false);
         window.location.reload();
       })

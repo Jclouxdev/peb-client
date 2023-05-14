@@ -10,6 +10,11 @@ import "../Form.css";
 
 interface LeafletMyMarkerProps {}
 
+var redIcon = L.icon({
+  iconUrl: "/src/assets/location-pin-connectsafely-37.png",
+  iconSize: [40, 40], // size of the icon
+});
+
 const MyMarker: React.FC<LeafletMyMarkerProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [showPopup, setShowPopup] = useState<boolean>(false);
@@ -21,7 +26,7 @@ const MyMarker: React.FC<LeafletMyMarkerProps> = () => {
     setLoading(true);
     map.on("click", function (e) {
       setShowPopup(true);
-      const marker = L.marker(e.latlng).addTo(map);
+      const marker = L.marker(e.latlng, { icon: redIcon }).addTo(map);
       console.log(marker);
       const { lat, lng } = marker.getLatLng();
       setLatPosition(lat);
