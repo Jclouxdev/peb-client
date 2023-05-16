@@ -14,6 +14,7 @@ const schema = yup.object().shape({
   username: yup.string().min(2).max(20).required(),
 });
 
+
 const icon = new L.Icon({
   iconUrl: "/src/assets/location-pin-connectsafely-37.png",
   iconSize: [40, 40],
@@ -82,6 +83,34 @@ const MapContent = ({
         setShareMarkerSuccess(false);
         console.log(error);
       });
+  };
+
+  const deleteMarker = (data: any) => {
+    const token = localStorage.getItem("token");
+    fetch(`${import.meta.env.VITE_BASE_URL}/markers/${data}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          setSelectedMarkerId(data);
+          window.location.reload();
+        } else {
+          throw new Error("Failed to delete marker");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const confirmDeleteMarker = (data: any) => {
+    if (window.confirm("êtes vous sur de supprimer cette emplacement ?")) {
+      deleteMarker(data);
+    }
   };
 
   return (
@@ -181,7 +210,13 @@ const MapContent = ({
                       />
                     </svg>
                   </div>
-                  <div className="marker__popup__nav__close">
+                  <div
+                    className="marker__popup__nav__close"
+                    id="marker_popup_nav_close"
+                    onClick={() => {
+                      confirmDeleteMarker(selectedMarker);
+                    }}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
