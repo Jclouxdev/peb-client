@@ -108,12 +108,8 @@ const MapContent = ({
   };
 
   const confirmDeleteMarker = (data: any) => {
-    if (window.confirm("tu veux vraiment supprimer ?")) {
-      if (window.confirm("tu es suuuuur ?")) {
-        if (window.confirm("sériieeeeuuux ?")) {
-          deleteMarker(data);
-        }
-      }
+    if (window.confirm("êtes vous sur de supprimer cette emplacement ?")) {
+      deleteMarker(data);
     }
   };
 

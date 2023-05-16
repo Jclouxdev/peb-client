@@ -24,6 +24,7 @@ const Maped = ({
         zoom={12}
         scrollWheelZoom={true}
         className="map"
+        minZoom={6}
       >
         <MapContent
           markers={data}
