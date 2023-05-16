@@ -77,7 +77,7 @@ const MapContent = ({
         } else {
           setShareMarkerSuccess(true);
         }
-        console.log(data);
+        // console.log(data);
       })
       .catch((error) => {
         setShareMarkerSuccess(false);

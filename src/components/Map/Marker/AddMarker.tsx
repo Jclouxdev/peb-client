@@ -27,7 +27,7 @@ const MyMarker: React.FC<LeafletMyMarkerProps> = () => {
     map.on("click", function (e) {
       setShowPopup(true);
       const marker = L.marker(e.latlng, { icon: redIcon }).addTo(map);
-      console.log(marker);
+      // console.log(marker);
       const { lat, lng } = marker.getLatLng();
       setLatPosition(lat);
       setLngPosition(lng);
